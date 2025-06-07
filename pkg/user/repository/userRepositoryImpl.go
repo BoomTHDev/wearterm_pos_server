@@ -35,3 +35,15 @@ func (r *userRepositoryImpl) Create(user *entities.User) (*entities.User, error)
 
 	return &insertedUser, nil
 }
+
+func (r *userRepositoryImpl) List() ([]entities.User, error) {
+	conn := r.db.ConnectionGetting()
+
+	users := []entities.User{}
+
+	if err := conn.Find(&users).Error; err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
