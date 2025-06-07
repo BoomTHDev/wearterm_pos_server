@@ -5,9 +5,10 @@ server:
   allowOrigins: ['*']
 
 database:
-  host: ""  # Will be set from DATABASE_HOST
-  port: 0     # Will be set from DATABASE_PORT
-  dbname: "" # Will be set from DATABASE_DBNAME
-  user: ""   # Will be set from DATABASE_USER
-  password: "" # Will be set from DATABASE_PASSWORD
-  sslmode: "" # Will be set from DATABASE_SSLMODE
+  host: ${DATABASE_HOST}
+  port: ${DATABASE_PORT}
+  dbname: ${DATABASE_DBNAME}
+  user: ${DATABASE_USER}
+  password: ${DATABASE_PASSWORD}
+  sslmode: ${DATABASE_SSLMODE}
+  schema: ${DATABASE_SCHEMA:-public}
