@@ -8,4 +8,5 @@ import (
 
 type UserService interface {
 	Add(user *entities.User) (*_userModel.RegisterResponse, *custom.AppError)
+	List() ([]_userModel.ListUserResponse, *custom.AppError)
 }

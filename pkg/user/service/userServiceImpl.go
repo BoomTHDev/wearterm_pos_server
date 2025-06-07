@@ -32,5 +32,13 @@ func (s *userServiceImpl) Add(user *entities.User) (*_userModel.RegisterResponse
 	if err != nil {
 		return nil, custom.ErrIntervalServer("USER_CREATE_FAILED", "Failed to create user", err)
 	}
-	return newUser.ToRegisterResponse(), nil
+	return _userModel.ToRegisterResponse(newUser), nil
+}
+
+func (s *userServiceImpl) List() ([]_userModel.ListUserResponse, *custom.AppError) {
+	users, err := s.userRepository.List()
+	if err != nil {
+		return nil, custom.ErrIntervalServer("USER_LIST_FAILED", "Failed to list users", err)
+	}
+	return _userModel.ToListUserResponse(users), nil
 }
