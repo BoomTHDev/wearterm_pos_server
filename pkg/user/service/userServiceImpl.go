@@ -18,7 +18,7 @@ func NewUserServiceImpl(userRepository _userRepository.UserRepository) UserServi
 func (s *userServiceImpl) Add(user *entities.User) (*_userModel.User, *custom.AppError) {
 	newUser, err := s.userRepository.Create(user)
 	if err != nil {
-		return nil, custom.ErrIntervalServer("INTERVAL_SERVER_ERROR", "Interval server error", err)
+		return nil, custom.ErrIntervalServer("USER_CREATE_FAILED", "Failed to create user", err)
 	}
 	return newUser.ToUserModel(), nil
 }
