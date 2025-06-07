@@ -7,5 +7,5 @@ import (
 )
 
 type UserService interface {
-	Add(user *entities.User) (*_userModel.User, *custom.AppError)
+	Add(user *entities.User) (*_userModel.RegisterResponse, *custom.AppError)
 }

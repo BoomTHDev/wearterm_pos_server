@@ -14,8 +14,8 @@ type User struct {
 	UpdatedAt time.Time `gorm:"not null;autoUpdateTime"`
 }
 
-func (u *User) ToUserModel() *_userModel.User {
-	return &_userModel.User{
+func (u *User) ToRegisterResponse() *_userModel.RegisterResponse {
+	return &_userModel.RegisterResponse{
 		ID:       u.ID,
 		Username: u.Username,
 	}

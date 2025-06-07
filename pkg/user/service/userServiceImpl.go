@@ -5,6 +5,7 @@ import (
 	"github.com/BoomTHDev/wear-pos-server/pkg/custom"
 	_userModel "github.com/BoomTHDev/wear-pos-server/pkg/user/model"
 	_userRepository "github.com/BoomTHDev/wear-pos-server/pkg/user/repository"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type userServiceImpl struct {
@@ -15,10 +16,21 @@ func NewUserServiceImpl(userRepository _userRepository.UserRepository) UserServi
 	return &userServiceImpl{userRepository: userRepository}
 }
 
-func (s *userServiceImpl) Add(user *entities.User) (*_userModel.User, *custom.AppError) {
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(bytes), err
+}
+
+func (s *userServiceImpl) Add(user *entities.User) (*_userModel.RegisterResponse, *custom.AppError) {
+	hashedPassword, err := HashPassword(user.Password)
+	if err != nil {
+		return nil, custom.ErrIntervalServer("USER_CREATE_FAILED", "Failed to hash password", err)
+	}
+
+	user.Password = hashedPassword
 	newUser, err := s.userRepository.Create(user)
 	if err != nil {
 		return nil, custom.ErrIntervalServer("USER_CREATE_FAILED", "Failed to create user", err)
 	}
-	return newUser.ToUserModel(), nil
+	return newUser.ToRegisterResponse(), nil
 }

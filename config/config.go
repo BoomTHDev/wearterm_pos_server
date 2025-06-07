@@ -38,18 +38,6 @@ var (
 	configInstance *Config
 )
 
-// func getEnvAsInt(name string, defaultVal int) int {
-// 	valStr := os.Getenv(name)
-// 	if valStr == "" {
-// 		return defaultVal
-// 	}
-// 	val, err := strconv.Atoi(valStr)
-// 	if err != nil {
-// 		return defaultVal
-// 	}
-// 	return val
-// }
-
 func ConfigGetting() *Config {
 	once.Do(func() {
 		viper.SetConfigName("config")
@@ -58,41 +46,10 @@ func ConfigGetting() *Config {
 		viper.AutomaticEnv()
 		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
-		// // Set default values
-		// viper.SetDefault("database.port", 5432)
-		// viper.SetDefault("database.sslmode", "disable")
-		// viper.SetDefault("database.schema", "public")
-
 		if err := viper.ReadInConfig(); err != nil {
 			panic(err)
 		}
-
-		// // Manually set the port from environment if it exists
-		// if port := os.Getenv("DATABASE_PORT"); port != "" {
-		// 	if portNum, err := strconv.Atoi(port); err == nil {
-		// 		viper.Set("database.port", portNum)
-		// 	}
-		// }
 	})
-
-	// // Create a default config first
-	// configInstance = &Config{
-	// 	Server: &Server{
-	// 		Port:         8080,
-	// 		AllowOrigins: []string{"*"},
-	// 		BodyLimit:    10,
-	// 		TimeOut:      30 * time.Second,
-	// 	},
-	// 	Database: &Database{
-	// 		Host:     os.Getenv("DATABASE_HOST"),
-	// 		Port:     getEnvAsInt("DATABASE_PORT", 5432),
-	// 		User:     os.Getenv("DATABASE_USER"),
-	// 		Password: os.Getenv("DATABASE_PASSWORD"),
-	// 		DBName:   os.Getenv("DATABASE_DBNAME"),
-	// 		SSLMode:  os.Getenv("DATABASE_SSLMODE"),
-	// 		Schema:   os.Getenv("DATABASE_SCHEMA"),
-	// 	},
-	// }
 
 	// Initialize configInstance before unmarshaling
 	configInstance = &Config{
