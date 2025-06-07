@@ -1,8 +1,8 @@
 server:
   port: 8080
   timeout: 30
-  bodylimit: 10
-  alloworigins: '*'
+  bodyLimit: 10
+  allowOrigins: ['*']
 
 database:
   host: ${DATABASE_HOST}

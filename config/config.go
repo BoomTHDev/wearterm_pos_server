@@ -45,7 +45,6 @@ func ConfigGetting() *Config {
 		viper.AddConfigPath("./config")
 		viper.AutomaticEnv()
 		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
 		if err := viper.ReadInConfig(); err != nil {
 			panic(err)
 		}
