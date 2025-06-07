@@ -41,7 +41,7 @@ func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
 		"success": true,
-		"data": users,
-		"message": "User list successfully"
+		"data":    users,
+		"message": "User list successfully",
 	})
 }
