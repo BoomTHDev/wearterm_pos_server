@@ -20,11 +20,11 @@ services:
         value: dpg-d11tdh3uibrs73ej5dgg-a
       - key: DATABASE_PORT
         value: '5432'
-      - key: DATABASE_NAME
+      - key: DATABASE_DBNAME
         value: wearterm_db
       - key: DATABASE_USER
         value: wearterm_db_user
       - key: DATABASE_PASSWORD
-        value: Bt4rKjRFw86wAGB7jrGXfLCg4dmEBl3v
+        sync: false
       - key: DATABASE_SSLMODE
         value: require
