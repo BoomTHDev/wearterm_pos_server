@@ -1,12 +1,10 @@
 package service
 
 import (
-	"log"
-
 	"github.com/BoomTHDev/wear-pos-server/entities"
+	"github.com/BoomTHDev/wear-pos-server/pkg/custom"
 	_userModel "github.com/BoomTHDev/wear-pos-server/pkg/user/model"
 	_userRepository "github.com/BoomTHDev/wear-pos-server/pkg/user/repository"
-	"github.com/gofiber/fiber/v2"
 )
 
 type userServiceImpl struct {
@@ -17,11 +15,10 @@ func NewUserServiceImpl(userRepository _userRepository.UserRepository) UserServi
 	return &userServiceImpl{userRepository: userRepository}
 }
 
-func (s *userServiceImpl) Add(user *entities.User) (*_userModel.User, error) {
+func (s *userServiceImpl) Add(user *entities.User) (*_userModel.User, *custom.AppError) {
 	newUser, err := s.userRepository.Create(user)
 	if err != nil {
-		log.Printf("Add user error: %v", err)
-		return nil, fiber.NewError(fiber.StatusInternalServerError, "Interval server error")
+		return nil, custom.ErrIntervalServer("INTERVAL_SERVER_ERROR", "Interval server error", err)
 	}
 	return newUser.ToUserModel(), nil
 }

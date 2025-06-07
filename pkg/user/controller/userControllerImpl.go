@@ -18,13 +18,17 @@ func NewUserController(userService _userService.UserService) UserController {
 func (c *userControllerImpl) Add(ctx *fiber.Ctx) error {
 	userEntity := entities.User{}
 	if err := ctx.BodyParser(&userEntity); err != nil {
-		return custom.Error(ctx, err)
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure it's valid JSON.", err)
 	}
 
-	user, err := c.userService.Add(&userEntity)
-	if err != nil {
-		return custom.Error(ctx, err)
+	user, appErr := c.userService.Add(&userEntity)
+	if appErr != nil {
+		return appErr
 	}
 
-	return ctx.Status(fiber.StatusCreated).JSON(user)
+	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"success": true,
+		"data":    user,
+		"message": "User added successfully",
+	})
 }
