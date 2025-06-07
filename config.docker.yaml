@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  timeout: 30
+  bodylimit: 10
+  alloworigins: '*'
+
+database:
+  host: ${DATABASE_HOST}
+  port: ${DATABASE_PORT}
+  dbname: ${DATABASE_DBNAME}
+  user: ${DATABASE_USER}
+  password: ${DATABASE_PASSWORD}
+  sslmode: ${DATABASE_SSLMODE}
