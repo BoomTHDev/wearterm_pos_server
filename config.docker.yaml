@@ -2,13 +2,15 @@ server:
   port: 8080
   timeout: 30
   bodyLimit: 10
-  allowOrigins: ['*']
+  allowOrigins:
+    - https://wearterm-pos.vercel.app
+    - http://localhost:3000 # For local development
 
 database:
-  host: ""  # Will be set from DATABASE_HOST
-  port: 5432  # Default, will be overridden by DATABASE_PORT
-  dbname: ""  # Will be set from DATABASE_DBNAME
-  user: ""    # Will be set from DATABASE_USER
-  password: "" # Will be set from DATABASE_PASSWORD
-  sslmode: "require"  # Default, will be overridden by DATABASE_SSLMODE
-  schema: "public"    # Default, will be overridden by DATABASE_SCHEMA
+  host: '' # Will be set from DATABASE_HOST
+  port: 5432 # Default, will be overridden by DATABASE_PORT
+  dbname: '' # Will be set from DATABASE_DBNAME
+  user: '' # Will be set from DATABASE_USER
+  password: '' # Will be set from DATABASE_PASSWORD
+  sslmode: 'require' # Default, will be overridden by DATABASE_SSLMODE
+  schema: 'public' # Default, will be overridden by DATABASE_SCHEMA

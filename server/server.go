@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -42,11 +43,26 @@ func NewFiberServer(conf *config.Config, db databases.Database) *fiberServer {
 }
 
 func (s *fiberServer) Start() {
+	// Join the allowed origins into a comma-separated string
+	allowedOrigins := strings.Join(s.conf.Server.AllowOrigins, ",")
+
 	s.app.Use(cors.New(cors.Config{
-		AllowOrigins:     fmt.Sprintf("%v", s.conf.Server.AllowOrigins[0]),
-		AllowMethods:     "GET, POST, PUT, DELETE",
+		AllowOrigins:     allowedOrigins,
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
-		AllowCredentials: true,
+		AllowCredentials: false, // Set to false when using wildcard
+		// If you need to support credentials, you must specify exact origins
+		// AllowCredentials: true,
+		// Or use a function to dynamically check allowed origins
+		// AllowOriginsFunc: func(origin string) bool {
+		//     // Check if origin is in your allowed origins list
+		//     for _, allowed := range s.conf.Server.AllowOrigins {
+		//         if allowed == origin {
+		//             return true
+		//         }
+		// }
+		// return false
+		// },
 	}))
 
 	s.app.Get("/v1/health", s.healthCheck)
