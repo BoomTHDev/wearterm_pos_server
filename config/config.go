@@ -94,6 +94,12 @@ func ConfigGetting() *Config {
 	// 	},
 	// }
 
+	// Initialize configInstance before unmarshaling
+	configInstance = &Config{
+		Server:   &Server{},
+		Database: &Database{},
+	}
+
 	// Unmarshal from config file if exists
 	if err := viper.Unmarshal(configInstance); err != nil {
 		panic(err)
