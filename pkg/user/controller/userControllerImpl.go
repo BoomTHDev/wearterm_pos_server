@@ -32,3 +32,16 @@ func (c *userControllerImpl) Add(ctx *fiber.Ctx) error {
 		"message": "User added successfully",
 	})
 }
+
+func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
+	users, appErr := c.userService.List()
+	if appErr != nil {
+		return appErr
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"data": users,
+		"message": "User list successfully"
+	})
+}

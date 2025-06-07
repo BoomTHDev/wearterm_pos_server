@@ -42,6 +42,9 @@ func (r *userRepositoryImpl) List() ([]entities.User, error) {
 	users := []entities.User{}
 
 	if err := conn.Find(&users).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, gorm.ErrRecordNotFound
+		}
 		return nil, err
 	}
 
