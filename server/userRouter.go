@@ -14,4 +14,5 @@ func (s *fiberServer) initUserRouter() {
 	userController := _userController.NewUserController(userService)
 
 	router.Post("/", userController.Add)
+	router.Get("/", userController.List)
 }
