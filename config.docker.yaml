@@ -5,10 +5,10 @@ server:
   allowOrigins: ['*']
 
 database:
-  host: ${DATABASE_HOST}
-  port: ${DATABASE_PORT}
-  dbname: ${DATABASE_DBNAME}
-  user: ${DATABASE_USER}
-  password: ${DATABASE_PASSWORD}
-  sslmode: ${DATABASE_SSLMODE}
-  schema: ${DATABASE_SCHEMA:-public}
+  host: ""  # Will be set from DATABASE_HOST
+  port: 5432  # Default, will be overridden by DATABASE_PORT
+  dbname: ""  # Will be set from DATABASE_DBNAME
+  user: ""    # Will be set from DATABASE_USER
+  password: "" # Will be set from DATABASE_PASSWORD
+  sslmode: "require"  # Default, will be overridden by DATABASE_SSLMODE
+  schema: "public"    # Default, will be overridden by DATABASE_SCHEMA
