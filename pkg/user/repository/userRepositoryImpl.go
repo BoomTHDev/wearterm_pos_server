@@ -42,11 +42,22 @@ func (r *userRepositoryImpl) List() ([]entities.User, error) {
 	return users, nil
 }
 
-func (r *userRepositoryImpl) Read(id uint64) (*entities.User, error) {
+func (r *userRepositoryImpl) ReadByID(id uint64) (*entities.User, error) {
 	conn := r.db.ConnectionGetting()
 
 	user := entities.User{}
 	if err := conn.First(&user, id).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (r *userRepositoryImpl) ReadByUsername(username string) (*entities.User, error) {
+	conn := r.db.ConnectionGetting()
+	user := entities.User{}
+
+	if err := conn.First(&user, "username = ?", username).Error; err != nil {
 		return nil, err
 	}
 

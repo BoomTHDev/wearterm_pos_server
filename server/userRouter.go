@@ -7,13 +7,13 @@ import (
 )
 
 func (s *fiberServer) initUserRouter() {
-	router := s.app.Group("/v1/users")
-
+	// Init User Plug
 	userRepository := _userRepository.NewUserRepositoryImpl(s.db)
 	userService := _userService.NewUserServiceImpl(userRepository)
 	userController := _userController.NewUserController(userService)
 
-	router.Post("/", userController.Add)
-	router.Get("/", userController.List)
-	router.Get("/:id", userController.Read)
+	// User Routes
+	userRouter := s.app.Group("/v1/users")
+	userRouter.Get("/", userController.List)
+	userRouter.Get("/:id", userController.Read)
 }
