@@ -34,7 +34,7 @@ func ToRegisterResponse(user *entities.User) *RegisterResponse {
 	}
 }
 
-func ToUserResponse(users []entities.User) []UserResponse {
+func ToUsersResponse(users []entities.User) []UserResponse {
 	if users == nil {
 		return nil
 	}
@@ -47,4 +47,16 @@ func ToUserResponse(users []entities.User) []UserResponse {
 		})
 	}
 	return listUsers
+}
+
+func ToUserResponse(user *entities.User) *UserResponse {
+	if user == nil {
+		return nil
+	}
+
+	return &UserResponse{
+		ID:        user.ID,
+		Username:  user.Username,
+		CreatedAt: user.CreatedAt,
+	}
 }

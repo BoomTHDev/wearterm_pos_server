@@ -43,10 +43,10 @@ func (s *userServiceImpl) List() ([]_userModel.UserResponse, *custom.AppError) {
 	if err != nil {
 		return nil, custom.ErrIntervalServer("USER_LIST_FAILED", "Failed to list users", err)
 	}
-	return _userModel.ToUserResponse(users), nil
+	return _userModel.ToUsersResponse(users), nil
 }
 
-func (s *userServiceImpl) Read(id uint64) (*entities.User, *custom.AppError) {
+func (s *userServiceImpl) Read(id uint64) (*_userModel.UserResponse, *custom.AppError) {
 	user, err := s.userRepository.Read(id)
 	if err != nil {
 		if custom.IsRecordNotFoundError(err) {
@@ -54,5 +54,5 @@ func (s *userServiceImpl) Read(id uint64) (*entities.User, *custom.AppError) {
 		}
 		return nil, custom.ErrIntervalServer("USER_READ_FAILED", "Failed to read user", err)
 	}
-	return user, nil
+	return _userModel.ToUserResponse(user), nil
 }
