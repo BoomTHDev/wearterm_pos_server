@@ -30,15 +30,29 @@ func (s *userServiceImpl) Add(user *entities.User) (*_userModel.RegisterResponse
 	user.Password = hashedPassword
 	newUser, err := s.userRepository.Create(user)
 	if err != nil {
+		if custom.IsDuplicateKeyError(err) {
+			return nil, custom.ErrConflict("USER_DUPLICATE", "User with this email already exists", err)
+		}
 		return nil, custom.ErrIntervalServer("USER_CREATE_FAILED", "Failed to create user", err)
 	}
 	return _userModel.ToRegisterResponse(newUser), nil
 }
 
-func (s *userServiceImpl) List() ([]_userModel.ListUserResponse, *custom.AppError) {
+func (s *userServiceImpl) List() ([]_userModel.UserResponse, *custom.AppError) {
 	users, err := s.userRepository.List()
 	if err != nil {
 		return nil, custom.ErrIntervalServer("USER_LIST_FAILED", "Failed to list users", err)
 	}
-	return _userModel.ToListUserResponse(users), nil
+	return _userModel.ToUserResponse(users), nil
+}
+
+func (s *userServiceImpl) Read(id uint64) (*entities.User, *custom.AppError) {
+	user, err := s.userRepository.Read(id)
+	if err != nil {
+		if custom.IsRecordNotFoundError(err) {
+			return nil, custom.ErrNotFound("USER_NOT_FOUND", "User not found", err)
+		}
+		return nil, custom.ErrIntervalServer("USER_READ_FAILED", "Failed to read user", err)
+	}
+	return user, nil
 }

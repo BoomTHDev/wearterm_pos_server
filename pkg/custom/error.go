@@ -2,7 +2,8 @@ package custom
 
 import (
 	"fmt"
-	"net/http"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 type AppError struct {
@@ -37,28 +38,28 @@ func ErrNotFound(code, message string, err error) *AppError {
 	if message == "" {
 		message = "The request resource was not found."
 	}
-	return NewError(http.StatusNotFound, code, message, err)
+	return NewError(fiber.StatusNotFound, code, message, err)
 }
 
 func ErrInvalidInput(code, message string, err error) *AppError {
 	if message == "" {
 		message = "Invalid input provided."
 	}
-	return NewError(http.StatusBadRequest, code, message, err)
+	return NewError(fiber.StatusBadRequest, code, message, err)
 }
 
 func ErrUnauthorized(code, message string, err error) *AppError {
 	if message == "" {
 		message = "Unauthorized access."
 	}
-	return NewError(http.StatusUnauthorized, code, message, err)
+	return NewError(fiber.StatusUnauthorized, code, message, err)
 }
 
 func ErrForbidden(code, message string, err error) *AppError {
 	if message == "" {
 		message = "Access to this resource is forbidden."
 	}
-	return NewError(http.StatusForbidden, code, message, err)
+	return NewError(fiber.StatusForbidden, code, message, err)
 }
 
 func ErrIntervalServer(code, message string, err error) *AppError {
@@ -68,12 +69,12 @@ func ErrIntervalServer(code, message string, err error) *AppError {
 	if code == "" {
 		code = "INTERNAL_SERVER_ERROR"
 	}
-	return NewError(http.StatusInternalServerError, code, message, err)
+	return NewError(fiber.StatusInternalServerError, code, message, err)
 }
 
 func ErrConflict(code, message string, err error) *AppError {
 	if message == "" {
 		message = "A conflict occurred with the current state of the resource."
 	}
-	return NewError(http.StatusConflict, code, message, err)
+	return NewError(fiber.StatusConflict, code, message, err)
 }

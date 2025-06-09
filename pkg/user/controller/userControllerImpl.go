@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/BoomTHDev/wear-pos-server/entities"
 	"github.com/BoomTHDev/wear-pos-server/pkg/custom"
 	_userService "github.com/BoomTHDev/wear-pos-server/pkg/user/service"
@@ -43,5 +45,23 @@ func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 		"success": true,
 		"data":    users,
 		"message": "User list successfully",
+	})
+}
+
+func (c *userControllerImpl) Read(ctx *fiber.Ctx) error {
+	id, err := strconv.Atoi(ctx.Params("id"))
+	if err != nil {
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body.", err)
+	}
+
+	user, appErr := c.userService.Read(uint64(id))
+	if appErr != nil {
+		return appErr
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"data":    user,
+		"message": "User read successfully",
 	})
 }

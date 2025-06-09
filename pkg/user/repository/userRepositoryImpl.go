@@ -1,11 +1,8 @@
 package repository
 
 import (
-	"errors"
-
 	"github.com/BoomTHDev/wear-pos-server/databases"
 	"github.com/BoomTHDev/wear-pos-server/entities"
-	"gorm.io/gorm"
 )
 
 type userRepositoryImpl struct {
@@ -27,9 +24,6 @@ func (r *userRepositoryImpl) Create(user *entities.User) (*entities.User, error)
 	// Fetch the created user to get all fields (including auto-generated ones)
 	insertedUser := entities.User{}
 	if err := conn.First(&insertedUser, user.ID).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, gorm.ErrRecordNotFound
-		}
 		return nil, err
 	}
 
@@ -42,11 +36,19 @@ func (r *userRepositoryImpl) List() ([]entities.User, error) {
 	users := []entities.User{}
 
 	if err := conn.Find(&users).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, gorm.ErrRecordNotFound
-		}
 		return nil, err
 	}
 
 	return users, nil
+}
+
+func (r *userRepositoryImpl) Read(id uint64) (*entities.User, error) {
+	conn := r.db.ConnectionGetting()
+
+	user := entities.User{}
+	if err := conn.First(&user, id).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }

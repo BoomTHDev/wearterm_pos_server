@@ -11,6 +11,8 @@ import (
 	"github.com/BoomTHDev/wear-pos-server/server/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 type fiberServer struct {
@@ -43,6 +45,8 @@ func NewFiberServer(conf *config.Config, db databases.Database) *fiberServer {
 }
 
 func (s *fiberServer) Start() {
+	s.app.Use(logger.New())
+
 	// Join the allowed origins into a comma-separated string
 	allowedOrigins := strings.Join(s.conf.Server.AllowOrigins, ",")
 

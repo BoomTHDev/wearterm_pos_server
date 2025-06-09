@@ -1,6 +1,10 @@
 package model
 
-import "github.com/BoomTHDev/wear-pos-server/entities"
+import (
+	"time"
+
+	"github.com/BoomTHDev/wear-pos-server/entities"
+)
 
 type (
 	RegisterRequest struct {
@@ -13,8 +17,10 @@ type (
 		Username string `json:"username"`
 	}
 
-	ListUserResponse struct {
-		*entities.User
+	UserResponse struct {
+		ID        uint64    `json:"id"`
+		Username  string    `json:"username"`
+		CreatedAt time.Time `json:"created_at"`
 	}
 )
 
@@ -28,14 +34,16 @@ func ToRegisterResponse(user *entities.User) *RegisterResponse {
 	}
 }
 
-func ToListUserResponse(users []entities.User) []ListUserResponse {
+func ToUserResponse(users []entities.User) []UserResponse {
 	if users == nil {
 		return nil
 	}
-	listUsers := []ListUserResponse{}
+	listUsers := []UserResponse{}
 	for _, user := range users {
-		listUsers = append(listUsers, ListUserResponse{
-			User: &user,
+		listUsers = append(listUsers, UserResponse{
+			ID:        user.ID,
+			Username:  user.Username,
+			CreatedAt: user.CreatedAt,
 		})
 	}
 	return listUsers
