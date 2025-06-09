@@ -14,3 +14,4 @@ database:
   password: '' # Will be set from DATABASE_PASSWORD
   sslmode: 'require' # Default, will be overridden by DATABASE_SSLMODE
   schema: 'public' # Default, will be overridden by DATABASE_SCHEMA
+

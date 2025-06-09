@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: wearterm_dev
+    ports:
+      - "8080:8080"  # ใช้พอร์ตจาก config.yaml
+    volumes:
+      - .:/app
+      - go-mod-cache:/go/pkg/mod
+    depends_on:
+      - db
+    networks:
+      - wearterm-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:17.5
+    container_name: wearterm_db
+    environment:
+      # ค่าเหล่านี้จะถูกโหลดจาก config.yaml ในโค้ด Go
+      POSTGRES_USER: postgres  # ค่าเริ่มต้น จะถูกแทนที่โดยโค้ด
+      POSTGRES_PASSWORD: postgres  # ค่าเริ่มต้น จะถูกแทนที่โดยโค้ด
+      POSTGRES_DB: wearterm_db  # ค่าเริ่มต้น จะถูกแทนที่โดยโค้ด
+    ports:
+      - "5432:5432"  # ใช้พอร์ตจาก config.yaml
+    volumes:
+      - weartermdb:/var/lib/postgresql/data
+    networks:
+      - wearterm-network
+    restart: unless-stopped
+
+networks:
+  wearterm-network:
+    driver: bridge
+
+volumes:
+  weartermdb:
+    name: weartermdb
+  go-mod-cache:
+    name: go-mod-cache
