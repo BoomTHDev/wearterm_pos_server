@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/BoomTHDev/wear-pos-server/pkg/custom"
 	_userModel "github.com/BoomTHDev/wear-pos-server/pkg/user/model"
 	_authService "github.com/BoomTHDev/wear-pos-server/pkg/user/service"
@@ -28,5 +30,26 @@ func (c *authControllerImpl) Register(ctx *fiber.Ctx) error {
 		"success": true,
 		"data":    user,
 		"message": "User registered successfully",
+	})
+}
+
+func (c *authControllerImpl) NewPIN(ctx *fiber.Ctx) error {
+	id, err := strconv.Atoi(ctx.Params("id"))
+	if err != nil {
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure your user id is valid.", err)
+	}
+
+	newPin := _userModel.NewPINRequest{}
+	if err := ctx.BodyParser(&newPin); err != nil {
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure it's valid JSON.", err)
+	}
+
+	if appErr := c.authService.NewPIN(uint64(id), newPin.Pin); appErr != nil {
+		return appErr
+	}
+
+	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"success": true,
+		"message": "User pin created successfully",
 	})
 }

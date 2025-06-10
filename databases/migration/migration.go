@@ -22,5 +22,5 @@ func main() {
 }
 
 func userMigration(tx *gorm.DB) {
-	tx.Migrator().CreateTable(&entities.User{})
+	tx.Migrator().AddColumn(&entities.User{}, "pin")
 }

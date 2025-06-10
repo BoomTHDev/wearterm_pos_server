@@ -63,3 +63,13 @@ func (r *userRepositoryImpl) ReadByUsername(username string) (*entities.User, er
 
 	return &user, nil
 }
+
+func (r *userRepositoryImpl) CreatePIN(id uint64, pin int) error {
+	conn := r.db.ConnectionGetting()
+
+	if err := conn.Model(&entities.User{}).Where("id = ?", id).Update("pin", pin).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

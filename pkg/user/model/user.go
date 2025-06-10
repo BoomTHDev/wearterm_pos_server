@@ -22,6 +22,10 @@ type (
 		Username  string    `json:"username"`
 		CreatedAt time.Time `json:"created_at"`
 	}
+
+	NewPINRequest struct {
+		Pin int `json:"pin"`
+	}
 )
 
 func ToRegisterResponse(user *entities.User) *RegisterResponse {
