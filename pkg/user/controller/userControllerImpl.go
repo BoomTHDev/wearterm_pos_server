@@ -16,24 +16,14 @@ func NewUserController(userService _userService.UserService) UserController {
 	return &userControllerImpl{userService: userService}
 }
 
-// func (c *userControllerImpl) Add(ctx *fiber.Ctx) error {
-// 	userEntity := entities.User{}
-// 	if err := ctx.BodyParser(&userEntity); err != nil {
-// 		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure it's valid JSON.", err)
-// 	}
-
-// 	user, appErr := c.userService.Add(&userEntity)
-// 	if appErr != nil {
-// 		return appErr
-// 	}
-
-// 	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
-// 		"success": true,
-// 		"data":    user,
-// 		"message": "User added successfully",
-// 	})
-// }
-
+// List godoc
+// @Summary List all users
+// @Description List all users
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {array} []model.UserResponse
+// @Router /v1/users [get]
 func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 	users, appErr := c.userService.List()
 	if appErr != nil {
@@ -47,6 +37,15 @@ func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 	})
 }
 
+// Read godoc
+// @Summary Read user by id
+// @Description Read user by id
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} model.UserResponse
+// @Router /v1/users/{id} [get]
 func (c *userControllerImpl) Read(ctx *fiber.Ctx) error {
 	id, err := strconv.Atoi(ctx.Params("id"))
 	if err != nil {

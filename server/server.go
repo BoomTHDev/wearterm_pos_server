@@ -11,8 +11,8 @@ import (
 	"github.com/BoomTHDev/wear-pos-server/server/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/swagger"
 )
 
 type fiberServer struct {
@@ -69,6 +69,8 @@ func (s *fiberServer) Start() {
 		// },
 	}))
 
+	s.app.Get("/swagger/*", swagger.HandlerDefault)
+	// Health Check
 	s.app.Get("/v1/health", s.healthCheck)
 
 	s.initUserRouter()

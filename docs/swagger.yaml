@@ -1,0 +1,185 @@
+basePath: /
+definitions:
+  model.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  model.LoginWithPasswordRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.LoginWithPinRequest:
+    properties:
+      pin:
+        type: integer
+      username:
+        type: string
+    type: object
+  model.NewPINRequest:
+    properties:
+      pin:
+        type: integer
+    type: object
+  model.RegisterRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is Wear Term server
+  title: Wear Term API
+  version: "1.0"
+paths:
+  /v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login with password
+      parameters:
+      - description: Login with password request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginWithPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LoginResponse'
+      summary: Login with password
+      tags:
+      - Authentication
+  /v1/auth/login-with-pin:
+    post:
+      consumes:
+      - application/json
+      description: Login with pin
+      parameters:
+      - description: Login with pin request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginWithPinRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LoginResponse'
+      summary: Login with pin
+      tags:
+      - Authentication
+  /v1/auth/new-pin/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Create new pin for user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New PIN Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.NewPINRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponse'
+      summary: Create new pin for user
+      tags:
+      - Authentication
+  /v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new user
+      parameters:
+      - description: Register Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponse'
+      summary: Register new user
+      tags:
+      - Authentication
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: List all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/model.UserResponse'
+              type: array
+            type: array
+      summary: List all users
+      tags:
+      - User
+  /v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Read user by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponse'
+      summary: Read user by id
+      tags:
+      - User
+schemes:
+- http
+- https
+swagger: "2.0"
