@@ -1,6 +1,8 @@
 package util
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"golang.org/x/crypto/bcrypt"
+)
 
 // HashPassword hashes the password using bcrypt
 func HashPassword(password string) (string, error) {

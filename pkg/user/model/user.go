@@ -26,6 +26,20 @@ type (
 	NewPINRequest struct {
 		Pin int `json:"pin"`
 	}
+
+	LoginWithPasswordRequest struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	LoginWithPinRequest struct {
+		Username string `json:"username"`
+		Pin      int    `json:"pin"`
+	}
+
+	LoginResponse struct {
+		Token string `json:"token"`
+	}
 )
 
 func ToRegisterResponse(user *entities.User) *RegisterResponse {

@@ -53,3 +53,35 @@ func (c *authControllerImpl) NewPIN(ctx *fiber.Ctx) error {
 		"message": "User pin created successfully",
 	})
 }
+
+func (c *authControllerImpl) LoginWithPassword(ctx *fiber.Ctx) error {
+	req := _userModel.LoginWithPasswordRequest{}
+	if err := ctx.BodyParser(&req); err != nil {
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure it's valid JSON.", err)
+	}
+	loginResponse, appErr := c.authService.LoginWithPassword(req)
+	if appErr != nil {
+		return appErr
+	}
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"data":    loginResponse,
+		"message": "User logged in successfully",
+	})
+}
+
+func (c *authControllerImpl) LoginWithPin(ctx *fiber.Ctx) error {
+	req := _userModel.LoginWithPinRequest{}
+	if err := ctx.BodyParser(&req); err != nil {
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure it's valid JSON.", err)
+	}
+	loginResponse, appErr := c.authService.LoginWithPin(req)
+	if appErr != nil {
+		return appErr
+	}
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"data":    loginResponse,
+		"message": "User logged in successfully",
+	})
+}

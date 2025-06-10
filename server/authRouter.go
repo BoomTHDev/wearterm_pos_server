@@ -16,4 +16,6 @@ func (s *fiberServer) initAuthRouter() {
 	authRouter := s.app.Group("/v1/auth")
 	authRouter.Post("/register", authController.Register)
 	authRouter.Put("/new-pin/:id", authController.NewPIN)
+	authRouter.Post("/login", authController.LoginWithPassword)
+	authRouter.Post("/login-with-pin", authController.LoginWithPin)
 }

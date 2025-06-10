@@ -64,10 +64,20 @@ func (r *userRepositoryImpl) ReadByUsername(username string) (*entities.User, er
 	return &user, nil
 }
 
-func (r *userRepositoryImpl) CreatePIN(id uint64, pin int) error {
+func (r *userRepositoryImpl) CreatePIN(id uint64, pin int, hashPin string) error {
 	conn := r.db.ConnectionGetting()
 
-	if err := conn.Model(&entities.User{}).Where("id = ?", id).Update("pin", pin).Error; err != nil {
+	tx := conn.Begin()
+
+	if err := tx.Model(&entities.User{}).Where("id = ?", id).Update("pin", pin).Error; err != nil {
+		return err
+	}
+
+	if err := tx.Model(&entities.User{}).Where("id = ?", id).Update("hash_pin", hashPin).Error; err != nil {
+		return err
+	}
+
+	if err := tx.Commit().Error; err != nil {
 		return err
 	}
 

@@ -7,5 +7,5 @@ type UserRepository interface {
 	List() ([]entities.User, error)
 	ReadByID(id uint64) (*entities.User, error)
 	ReadByUsername(username string) (*entities.User, error)
-	CreatePIN(id uint64, pin int) error
+	CreatePIN(id uint64, pin int, hashPin string) error
 }

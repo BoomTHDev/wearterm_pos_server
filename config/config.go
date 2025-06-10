@@ -20,6 +20,7 @@ type (
 		AllowOrigins []string      `mapstructure:"allowOrigins" validate:"required"`
 		BodyLimit    int           `mapstructure:"bodyLimit" validate:"required"`
 		TimeOut      time.Duration `mapstructure:"timeout" validate:"required"`
+		JWTSecret    string        `mapstructure:"jwtSecret" validate:"required"`
 	}
 
 	Database struct {

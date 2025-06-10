@@ -5,6 +5,7 @@ server:
   allowOrigins:
     - https://wearterm-pos.vercel.app
     - http://localhost:3000 # For local development
+  jwtSecret: ''
 
 database:
   host: '' # Will be set from DATABASE_HOST

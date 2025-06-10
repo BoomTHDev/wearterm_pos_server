@@ -9,6 +9,7 @@ type User struct {
 	Username  string `gorm:"unique;not null"`
 	Password  string `gorm:"not null"`
 	Pin       int
+	HashPin   string
 	CreatedAt time.Time `gorm:"not null;autoCreateTime"`
 	UpdatedAt time.Time `gorm:"not null;autoUpdateTime"`
 }

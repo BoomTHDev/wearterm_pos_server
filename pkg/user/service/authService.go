@@ -7,5 +7,7 @@ import (
 
 type AuthService interface {
 	Register(req _userModel.RegisterRequest) (*_userModel.RegisterResponse, *custom.AppError)
-	NewPIN(id uint64, pin int) error
+	NewPIN(id uint64, pin int) *custom.AppError
+	LoginWithPassword(req _userModel.LoginWithPasswordRequest) (*_userModel.LoginResponse, *custom.AppError)
+	LoginWithPin(req _userModel.LoginWithPinRequest) (*_userModel.LoginResponse, *custom.AppError)
 }
