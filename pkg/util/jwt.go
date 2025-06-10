@@ -13,7 +13,6 @@ type Claims struct {
 }
 
 func GenerateToken(userID uint64, secret string) (string, error) {
-	fmt.Println(secret)
 	claims := &Claims{
 		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
