@@ -4,6 +4,7 @@ import (
 	_userController "github.com/BoomTHDev/wear-pos-server/pkg/user/controller"
 	_userRepository "github.com/BoomTHDev/wear-pos-server/pkg/user/repository"
 	_userService "github.com/BoomTHDev/wear-pos-server/pkg/user/service"
+	"github.com/BoomTHDev/wear-pos-server/server/middleware"
 )
 
 func (s *fiberServer) initUserRouter() {
@@ -14,6 +15,7 @@ func (s *fiberServer) initUserRouter() {
 
 	// User Routes
 	userRouter := s.app.Group("/v1/users")
+	userRouter.Use(middleware.AuthMiddleware())
 	userRouter.Get("/", userController.List)
 	userRouter.Get("/:id", userController.Read)
 }

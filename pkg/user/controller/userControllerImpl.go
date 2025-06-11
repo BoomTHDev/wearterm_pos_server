@@ -16,13 +16,12 @@ func NewUserController(userService _userService.UserService) UserController {
 	return &userControllerImpl{userService: userService}
 }
 
-// List godoc
-// @Summary List all users
+// @Summary List users
 // @Description List all users
 // @Tags User
 // @Accept json
 // @Produce json
-// @Success 200 {array} []model.UserResponse
+// @Success 200 {object} []model.UserResponse
 // @Router /v1/users [get]
 func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 	users, appErr := c.userService.List()
@@ -37,9 +36,8 @@ func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 	})
 }
 
-// Read godoc
-// @Summary Read user by id
-// @Description Read user by id
+// @Summary Read user
+// @Description Read a specific user by ID
 // @Tags User
 // @Accept json
 // @Produce json

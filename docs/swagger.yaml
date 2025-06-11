@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   model.LoginResponse:
     properties:
@@ -42,19 +41,16 @@ definitions:
     type: object
 info:
   contact: {}
-  description: This is Wear Term server
-  title: Wear Term API
-  version: "1.0"
 paths:
   /v1/auth/login:
     post:
       consumes:
       - application/json
-      description: Login with password
+      description: Login a user with password
       parameters:
-      - description: Login with password request
+      - description: User object
         in: body
-        name: body
+        name: user
         required: true
         schema:
           $ref: '#/definitions/model.LoginWithPasswordRequest'
@@ -72,11 +68,11 @@ paths:
     post:
       consumes:
       - application/json
-      description: Login with pin
+      description: Login a user with pin
       parameters:
-      - description: Login with pin request
+      - description: User object
         in: body
-        name: body
+        name: user
         required: true
         schema:
           $ref: '#/definitions/model.LoginWithPinRequest'
@@ -94,49 +90,49 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create new pin for user
+      description: Create a new PIN for a user
       parameters:
       - description: User ID
         in: path
         name: id
         required: true
         type: integer
-      - description: New PIN Request
+      - description: New PIN object
         in: body
-        name: body
+        name: pin
         required: true
         schema:
           $ref: '#/definitions/model.NewPINRequest'
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/model.UserResponse'
-      summary: Create new pin for user
+      summary: New PIN
       tags:
       - Authentication
   /v1/auth/register:
     post:
       consumes:
       - application/json
-      description: Register new user
+      description: Register a new user
       parameters:
-      - description: Register Request
+      - description: User object
         in: body
-        name: body
+        name: user
         required: true
         schema:
           $ref: '#/definitions/model.RegisterRequest'
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/model.UserResponse'
-      summary: Register new user
+      summary: Register user
       tags:
       - Authentication
   /v1/users:
@@ -151,18 +147,16 @@ paths:
           description: OK
           schema:
             items:
-              items:
-                $ref: '#/definitions/model.UserResponse'
-              type: array
+              $ref: '#/definitions/model.UserResponse'
             type: array
-      summary: List all users
+      summary: List users
       tags:
       - User
   /v1/users/{id}:
     get:
       consumes:
       - application/json
-      description: Read user by id
+      description: Read a specific user by ID
       parameters:
       - description: User ID
         in: path
@@ -176,10 +170,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.UserResponse'
-      summary: Read user by id
+      summary: Read user
       tags:
       - User
-schemes:
-- http
-- https
 swagger: "2.0"

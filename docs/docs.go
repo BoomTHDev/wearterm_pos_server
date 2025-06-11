@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/v1/auth/login": {
             "post": {
-                "description": "Login with password",
+                "description": "Login a user with password",
                 "consumes": [
                     "application/json"
                 ],
@@ -30,8 +30,8 @@ const docTemplate = `{
                 "summary": "Login with password",
                 "parameters": [
                     {
-                        "description": "Login with password request",
-                        "name": "body",
+                        "description": "User object",
+                        "name": "user",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -51,7 +51,7 @@ const docTemplate = `{
         },
         "/v1/auth/login-with-pin": {
             "post": {
-                "description": "Login with pin",
+                "description": "Login a user with pin",
                 "consumes": [
                     "application/json"
                 ],
@@ -64,8 +64,8 @@ const docTemplate = `{
                 "summary": "Login with pin",
                 "parameters": [
                     {
-                        "description": "Login with pin request",
-                        "name": "body",
+                        "description": "User object",
+                        "name": "user",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -85,7 +85,7 @@ const docTemplate = `{
         },
         "/v1/auth/new-pin/{id}": {
             "post": {
-                "description": "Create new pin for user",
+                "description": "Create a new PIN for a user",
                 "consumes": [
                     "application/json"
                 ],
@@ -95,7 +95,7 @@ const docTemplate = `{
                 "tags": [
                     "Authentication"
                 ],
-                "summary": "Create new pin for user",
+                "summary": "New PIN",
                 "parameters": [
                     {
                         "type": "integer",
@@ -105,8 +105,8 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "New PIN Request",
-                        "name": "body",
+                        "description": "New PIN object",
+                        "name": "pin",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -115,8 +115,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.UserResponse"
                         }
@@ -126,7 +126,7 @@ const docTemplate = `{
         },
         "/v1/auth/register": {
             "post": {
-                "description": "Register new user",
+                "description": "Register a new user",
                 "consumes": [
                     "application/json"
                 ],
@@ -136,11 +136,11 @@ const docTemplate = `{
                 "tags": [
                     "Authentication"
                 ],
-                "summary": "Register new user",
+                "summary": "Register user",
                 "parameters": [
                     {
-                        "description": "Register Request",
-                        "name": "body",
+                        "description": "User object",
+                        "name": "user",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -149,8 +149,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.UserResponse"
                         }
@@ -170,17 +170,14 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "List all users",
+                "summary": "List users",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/model.UserResponse"
-                                }
+                                "$ref": "#/definitions/model.UserResponse"
                             }
                         }
                     }
@@ -189,7 +186,7 @@ const docTemplate = `{
         },
         "/v1/users/{id}": {
             "get": {
-                "description": "Read user by id",
+                "description": "Read a specific user by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -199,7 +196,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "Read user by id",
+                "summary": "Read user",
                 "parameters": [
                     {
                         "type": "integer",
@@ -289,12 +286,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "",
 	Host:             "",
-	BasePath:         "/",
-	Schemes:          []string{"http", "https"},
-	Title:            "Wear Term API",
-	Description:      "This is Wear Term server",
+	BasePath:         "",
+	Schemes:          []string{},
+	Title:            "",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
