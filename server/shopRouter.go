@@ -17,4 +17,5 @@ func (s *fiberServer) initShopRouter() {
 	shopRouter := s.app.Group("/v1/shop")
 	shopRouter.Use(middleware.AuthMiddleware())
 	shopRouter.Post("/:userId", shopController.NewShop)
+	shopRouter.Get("/:userId", shopController.List)
 }

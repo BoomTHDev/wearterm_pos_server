@@ -1,6 +1,10 @@
 package model
 
-import "github.com/BoomTHDev/wear-pos-server/entities"
+import (
+	"time"
+
+	"github.com/BoomTHDev/wear-pos-server/entities"
+)
 
 type (
 	NewShopRequest struct {
@@ -9,8 +13,16 @@ type (
 	}
 
 	ShopResponse struct {
-		ID   uint64 `json:"id"`
-		Name string `json:"name"`
+		ID        uint64    `json:"id"`
+		Name      string    `json:"name"`
+		CreatedAt time.Time `json:"created_at"`
+	}
+
+	ShopResponses struct {
+		ID        uint64    `json:"id"`
+		Name      string    `json:"name"`
+		UserID    uint64    `json:"user_id"`
+		CreatedAt time.Time `json:"created_at"`
 	}
 )
 
@@ -24,16 +36,19 @@ func ToShopResponse(shop *entities.Shop) *ShopResponse {
 	}
 }
 
-func ToShopsResponse(shops []entities.Shop) []ShopResponse {
+func ToShopResponses(shops []entities.Shop) []ShopResponses {
 	if shops == nil {
 		return nil
 	}
-	result := make([]ShopResponse, 0, len(shops))
+
+	listShops := []ShopResponses{}
 	for _, shop := range shops {
-		result = append(result, ShopResponse{
-			ID:   shop.ID,
-			Name: shop.Name,
+		listShops = append(listShops, ShopResponses{
+			ID:        shop.ID,
+			Name:      shop.Name,
+			UserID:    shop.UserID,
+			CreatedAt: shop.CreatedAt,
 		})
 	}
-	return result
+	return listShops
 }

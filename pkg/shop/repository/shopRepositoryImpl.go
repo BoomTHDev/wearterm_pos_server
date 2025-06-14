@@ -37,3 +37,16 @@ func (r *shopRepositoryImpl) CheckShopExists(userID uint64, shopName string) (bo
 
 	return count > 0, nil
 }
+
+func (r *shopRepositoryImpl) ListShops(userID uint64) ([]entities.Shop, error) {
+	conn := r.db.ConnectionGetting()
+
+	var shops []entities.Shop
+
+	// Query shops for the specific user
+	if err := conn.Where("user_id = ?", userID).Find(&shops).Error; err != nil {
+		return nil, err
+	}
+
+	return shops, nil
+}

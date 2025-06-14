@@ -14,12 +14,12 @@ func NewUserServiceImpl(userRepository _userRepository.UserRepository) UserServi
 	return &userServiceImpl{userRepository: userRepository}
 }
 
-func (s *userServiceImpl) List() ([]_userModel.UsersResponse, *custom.AppError) {
+func (s *userServiceImpl) List() ([]_userModel.UserResponses, *custom.AppError) {
 	users, err := s.userRepository.List()
 	if err != nil {
 		return nil, custom.ErrIntervalServer("USER_LIST_FAILED", "Failed to list users", err)
 	}
-	return _userModel.ToUsersResponse(users), nil
+	return _userModel.ToUserResponses(users), nil
 }
 
 func (s *userServiceImpl) Read(id uint64) (*_userModel.UserResponse, *custom.AppError) {

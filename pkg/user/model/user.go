@@ -18,17 +18,17 @@ type (
 		Username string `json:"username"`
 	}
 
-	UsersResponse struct {
+	UserResponse struct {
+		ID        uint64                     `json:"id"`
+		Username  string                     `json:"username"`
+		CreatedAt time.Time                  `json:"created_at"`
+		Shops     []_shopModel.ShopResponses `json:"shops"`
+	}
+
+	UserResponses struct {
 		ID        uint64    `json:"id"`
 		Username  string    `json:"username"`
 		CreatedAt time.Time `json:"created_at"`
-	}
-
-	UserResponse struct {
-		ID        uint64                    `json:"id"`
-		Username  string                    `json:"username"`
-		CreatedAt time.Time                 `json:"created_at"`
-		Shops     []_shopModel.ShopResponse `json:"shops"`
 	}
 
 	NewPINRequest struct {
@@ -60,21 +60,6 @@ func ToRegisterResponse(user *entities.User) *RegisterResponse {
 	}
 }
 
-func ToUsersResponse(users []entities.User) []UsersResponse {
-	if users == nil {
-		return nil
-	}
-	listUsers := []UsersResponse{}
-	for _, user := range users {
-		listUsers = append(listUsers, UsersResponse{
-			ID:        user.ID,
-			Username:  user.Username,
-			CreatedAt: user.CreatedAt,
-		})
-	}
-	return listUsers
-}
-
 func ToUserResponse(user *entities.User) *UserResponse {
 	if user == nil {
 		return nil
@@ -84,6 +69,22 @@ func ToUserResponse(user *entities.User) *UserResponse {
 		ID:        user.ID,
 		Username:  user.Username,
 		CreatedAt: user.CreatedAt,
-		Shops:     _shopModel.ToShopsResponse(user.Shops),
+		Shops:     _shopModel.ToShopResponses(user.Shops),
 	}
+}
+
+func ToUserResponses(users []entities.User) []UserResponses {
+	if users == nil {
+		return nil
+	}
+
+	listUsers := []UserResponses{}
+	for _, user := range users {
+		listUsers = append(listUsers, UserResponses{
+			ID:        user.ID,
+			Username:  user.Username,
+			CreatedAt: user.CreatedAt,
+		})
+	}
+	return listUsers
 }

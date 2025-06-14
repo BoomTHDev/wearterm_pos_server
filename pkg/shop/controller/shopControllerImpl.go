@@ -40,3 +40,20 @@ func (c *shopControllerImpl) NewShop(ctx *fiber.Ctx) error {
 		"message": "Shop created successfully",
 	})
 }
+
+func (c *shopControllerImpl) List(ctx *fiber.Ctx) error {
+	userId, err := strconv.Atoi(ctx.Params("userId"))
+	if err != nil {
+		return custom.ErrInvalidInput("INVALID_REQUEST_BODY", "Failed to parse request body. Please ensure it's valid JSON.", err)
+	}
+
+	shopResponses, appErr := c.shopService.ListShops(uint64(userId))
+	if appErr != nil {
+		return appErr
+	}
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+		"data":    shopResponses,
+		"message": "Shops listed successfully",
+	})
+}

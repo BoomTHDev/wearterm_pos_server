@@ -7,4 +7,5 @@ import (
 
 type ShopService interface {
 	NewShop(req _shopModel.NewShopRequest) (*_shopModel.ShopResponse, *custom.AppError)
+	ListShops(userID uint64) ([]_shopModel.ShopResponses, *custom.AppError)
 }

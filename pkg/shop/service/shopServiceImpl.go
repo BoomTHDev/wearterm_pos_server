@@ -46,3 +46,15 @@ func (s *shopServiceImpl) NewShop(req _shopModel.NewShopRequest) (*_shopModel.Sh
 
 	return _shopModel.ToShopResponse(newShop), nil
 }
+
+func (s *shopServiceImpl) ListShops(userID uint64) ([]_shopModel.ShopResponses, *custom.AppError) {
+	shops, err := s.shopRepository.ListShops(userID)
+	if err != nil {
+		if custom.IsRecordNotFoundError(err) {
+			return nil, custom.ErrNotFound("SHOP_NOT_FOUND", "shop not found", err)
+		}
+		return nil, custom.ErrIntervalServer("INTERVAL_SERVER", "Failed to list shops", err)
+	}
+
+	return _shopModel.ToShopResponses(shops), nil
+}
