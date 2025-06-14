@@ -6,6 +6,6 @@ import (
 )
 
 type UserService interface {
-	List() ([]_userModel.UserResponse, *custom.AppError)
+	List() ([]_userModel.UsersResponse, *custom.AppError)
 	Read(id uint64) (*_userModel.UserResponse, *custom.AppError)
 }

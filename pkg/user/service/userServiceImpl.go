@@ -14,7 +14,7 @@ func NewUserServiceImpl(userRepository _userRepository.UserRepository) UserServi
 	return &userServiceImpl{userRepository: userRepository}
 }
 
-func (s *userServiceImpl) List() ([]_userModel.UserResponse, *custom.AppError) {
+func (s *userServiceImpl) List() ([]_userModel.UsersResponse, *custom.AppError) {
 	users, err := s.userRepository.List()
 	if err != nil {
 		return nil, custom.ErrIntervalServer("USER_LIST_FAILED", "Failed to list users", err)

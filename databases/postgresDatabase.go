@@ -32,7 +32,10 @@ func NewPostgresDatabase(conf *config.Database) Database {
 			conf.Schema,
 		)
 
-		conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+			SkipDefaultTransaction: true,
+			PrepareStmt:            true,
+		})
 		if err != nil {
 			panic(err)
 		}

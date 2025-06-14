@@ -46,7 +46,9 @@ func (r *userRepositoryImpl) ReadByID(id uint64) (*entities.User, error) {
 	conn := r.db.ConnectionGetting()
 
 	user := entities.User{}
-	if err := conn.First(&user, id).Error; err != nil {
+	if err := conn.
+		Preload("Shops").
+		First(&user, id).Error; err != nil {
 		return nil, err
 	}
 

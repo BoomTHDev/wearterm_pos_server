@@ -11,7 +11,7 @@ func (s *fiberServer) initUserRouter() {
 	// Init User Plug
 	userRepository := _userRepository.NewUserRepositoryImpl(s.db)
 	userService := _userService.NewUserServiceImpl(userRepository)
-	userController := _userController.NewUserController(userService)
+	userController := _userController.NewUserControllerImpl(userService)
 
 	// User Routes
 	userRouter := s.app.Group("/v1/users")

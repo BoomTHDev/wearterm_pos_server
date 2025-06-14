@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/BoomTHDev/wear-pos-server/entities"
+	_shopModel "github.com/BoomTHDev/wear-pos-server/pkg/shop/model"
 )
 
 type (
@@ -17,10 +18,17 @@ type (
 		Username string `json:"username"`
 	}
 
-	UserResponse struct {
+	UsersResponse struct {
 		ID        uint64    `json:"id"`
 		Username  string    `json:"username"`
 		CreatedAt time.Time `json:"created_at"`
+	}
+
+	UserResponse struct {
+		ID        uint64                    `json:"id"`
+		Username  string                    `json:"username"`
+		CreatedAt time.Time                 `json:"created_at"`
+		Shops     []_shopModel.ShopResponse `json:"shops"`
 	}
 
 	NewPINRequest struct {
@@ -52,13 +60,13 @@ func ToRegisterResponse(user *entities.User) *RegisterResponse {
 	}
 }
 
-func ToUsersResponse(users []entities.User) []UserResponse {
+func ToUsersResponse(users []entities.User) []UsersResponse {
 	if users == nil {
 		return nil
 	}
-	listUsers := []UserResponse{}
+	listUsers := []UsersResponse{}
 	for _, user := range users {
-		listUsers = append(listUsers, UserResponse{
+		listUsers = append(listUsers, UsersResponse{
 			ID:        user.ID,
 			Username:  user.Username,
 			CreatedAt: user.CreatedAt,
@@ -76,5 +84,6 @@ func ToUserResponse(user *entities.User) *UserResponse {
 		ID:        user.ID,
 		Username:  user.Username,
 		CreatedAt: user.CreatedAt,
+		Shops:     _shopModel.ToShopsResponse(user.Shops),
 	}
 }

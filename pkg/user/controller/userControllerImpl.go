@@ -12,17 +12,10 @@ type userControllerImpl struct {
 	userService _userService.UserService
 }
 
-func NewUserController(userService _userService.UserService) UserController {
+func NewUserControllerImpl(userService _userService.UserService) UserController {
 	return &userControllerImpl{userService: userService}
 }
 
-// @Summary List users
-// @Description List all users
-// @Tags User
-// @Accept json
-// @Produce json
-// @Success 200 {object} []model.UserResponse
-// @Router /v1/users [get]
 func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 	users, appErr := c.userService.List()
 	if appErr != nil {
@@ -36,14 +29,6 @@ func (c *userControllerImpl) List(ctx *fiber.Ctx) error {
 	})
 }
 
-// @Summary Read user
-// @Description Read a specific user by ID
-// @Tags User
-// @Accept json
-// @Produce json
-// @Param id path int true "User ID"
-// @Success 200 {object} model.UserResponse
-// @Router /v1/users/{id} [get]
 func (c *userControllerImpl) Read(ctx *fiber.Ctx) error {
 	id, err := strconv.Atoi(ctx.Params("id"))
 	if err != nil {

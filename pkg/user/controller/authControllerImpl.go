@@ -13,18 +13,10 @@ type authControllerImpl struct {
 	authService _authService.AuthService
 }
 
-func NewAuthController(authService _authService.AuthService) AuthController {
+func NewAuthControllerImpl(authService _authService.AuthService) AuthController {
 	return &authControllerImpl{authService: authService}
 }
 
-// @Summary Register user
-// @Description Register a new user
-// @Tags 	Authentication
-// @Accept json
-// @Produce json
-// @Param user body model.RegisterRequest true "User object"
-// @Success 201 {object} model.UserResponse
-// @Router /v1/auth/register [post]
 func (c *authControllerImpl) Register(ctx *fiber.Ctx) error {
 	req := _userModel.RegisterRequest{}
 	if err := ctx.BodyParser(&req); err != nil {
@@ -41,15 +33,6 @@ func (c *authControllerImpl) Register(ctx *fiber.Ctx) error {
 	})
 }
 
-// @Summary New PIN
-// @Description Create a new PIN for a user
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Param id path int true "User ID"
-// @Param pin body model.NewPINRequest true "New PIN object"
-// @Success 201 {object} model.UserResponse
-// @Router /v1/auth/new-pin/{id} [post]
 func (c *authControllerImpl) NewPIN(ctx *fiber.Ctx) error {
 	id, err := strconv.Atoi(ctx.Params("id"))
 	if err != nil {
@@ -71,14 +54,6 @@ func (c *authControllerImpl) NewPIN(ctx *fiber.Ctx) error {
 	})
 }
 
-// @Summary Login with password
-// @Description Login a user with password
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Param user body model.LoginWithPasswordRequest true "User object"
-// @Success 200 {object} model.LoginResponse
-// @Router /v1/auth/login [post]
 func (c *authControllerImpl) LoginWithPassword(ctx *fiber.Ctx) error {
 	req := _userModel.LoginWithPasswordRequest{}
 	if err := ctx.BodyParser(&req); err != nil {
@@ -95,14 +70,6 @@ func (c *authControllerImpl) LoginWithPassword(ctx *fiber.Ctx) error {
 	})
 }
 
-// @Summary Login with pin
-// @Description Login a user with pin
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Param user body model.LoginWithPinRequest true "User object"
-// @Success 200 {object} model.LoginResponse
-// @Router /v1/auth/login-with-pin [post]
 func (c *authControllerImpl) LoginWithPin(ctx *fiber.Ctx) error {
 	req := _userModel.LoginWithPinRequest{}
 	if err := ctx.BodyParser(&req); err != nil {

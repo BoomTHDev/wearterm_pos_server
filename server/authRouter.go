@@ -10,7 +10,7 @@ func (s *fiberServer) initAuthRouter() {
 	// Init Auth Plug
 	userRepository := _userRepository.NewUserRepositoryImpl(s.db)
 	authService := _authService.NewAuthServiceImpl(userRepository)
-	authController := _authController.NewAuthController(authService)
+	authController := _authController.NewAuthControllerImpl(authService)
 
 	// Auth Routes
 	authRouter := s.app.Group("/v1/auth")

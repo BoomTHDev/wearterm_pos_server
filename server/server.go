@@ -68,14 +68,12 @@ func (s *fiberServer) Start() {
 		// },
 	}))
 
-	// Scalar
-	s.app.Use(middleware.ScalarHandler())
-
 	// Health Check
 	s.app.Get("/v1/health", s.healthCheck)
 
 	s.initUserRouter()
 	s.initAuthRouter()
+	s.initShopRouter()
 
 	s.app.Use(func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{

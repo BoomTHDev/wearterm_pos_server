@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/BoomTHDev/wear-pos-server/config"
 	"github.com/BoomTHDev/wear-pos-server/databases"
-	_ "github.com/BoomTHDev/wear-pos-server/docs"
 	"github.com/BoomTHDev/wear-pos-server/server"
 )
 

@@ -10,6 +10,7 @@ services:
       - "8080:8080"  # ใช้พอร์ตจาก config.yaml
     volumes:
       - .:/app
+      - ./config:/app/config
       - go-mod-cache:/go/pkg/mod
     depends_on:
       - db
@@ -21,17 +22,31 @@ services:
     image: postgres:17.5
     container_name: wearterm_db
     environment:
-      # ค่าเหล่านี้จะถูกโหลดจาก config.yaml ในโค้ด Go
-      POSTGRES_USER: postgres  # ค่าเริ่มต้น จะถูกแทนที่โดยโค้ด
-      POSTGRES_PASSWORD: postgres  # ค่าเริ่มต้น จะถูกแทนที่โดยโค้ด
-      POSTGRES_DB: wearterm_db  # ค่าเริ่มต้น จะถูกแทนที่โดยโค้ด
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresql
+      POSTGRES_DB: wearterm_db
     ports:
-      - "5432:5432"  # ใช้พอร์ตจาก config.yaml
+      - "5432:5432"
     volumes:
       - weartermdb:/var/lib/postgresql/data
     networks:
       - wearterm-network
     restart: unless-stopped
+
+  # pgadmin:
+  #   image: elestio/pgadmin:latest
+  #   container_name: wearterm_pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: boomthdev@gmail.com
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #     PGADMIN_CONFIG_SERVER_MODE: 'False'
+  #   ports:
+  #     - "5050:80"
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   networks:
+  #     - wearterm-network
+  #   restart: unless-stopped
 
 networks:
   wearterm-network:
@@ -42,3 +57,5 @@ volumes:
     name: weartermdb
   go-mod-cache:
     name: go-mod-cache
+  # pgadmin-data:
+  #   name: pgadmin-data
